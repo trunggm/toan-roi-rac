@@ -1,0 +1,10 @@
+\select@language {vietnam}
+\contentsline {chapter}{\numberline {1}Gi\IeC {\'\ohorn }i thi\IeC {\d \ecircumflex }u v\IeC {\`\ecircumflex } gi\IeC {\h a}i thu\IeC {\d \acircumflex }t GRASP}{5}
+\contentsline {section}{\numberline {1.1}Gi\IeC {\'\ohorn }i thi\IeC {\d \ecircumflex }u}{5}
+\contentsline {section}{\numberline {1.2}B\IeC {\`a}i to\IeC {\'a}n v\IeC {\`a} gi\IeC {\h a}i thu\IeC {\d \acircumflex }t}{5}
+\contentsline {chapter}{\numberline {2}C\IeC {\'\acircumflex }u tr\IeC {\'u}c c\IeC {\h u}a danh s\IeC {\'a}ch \IeC {\'\uhorn }ng vi\IeC {\^e}n h\IeC {\d a}n ch\IeC {\'\ecircumflex }}{9}
+\contentsline {section}{\numberline {2.1}C\IeC {\'\acircumflex }u tr\IeC {\'u}c c\IeC {\h u}a danh s\IeC {\'a}ch \IeC {\'\uhorn }ng vi\IeC {\^e}n h\IeC {\d a}n ch\IeC {\'\ecircumflex }}{9}
+\contentsline {chapter}{\numberline {3}T\IeC {\h \ocircumflex }ng k\IeC {\'\ecircumflex }t v\IeC {\`a} \IeC {\'\uhorn }ng d\IeC {\d u}ng c\IeC {\h u}a gi\IeC {\h a}i thu\IeC {\d \acircumflex }t GRASP}{17}
+\contentsline {section}{\numberline {3.1}T\IeC {\h \ocircumflex }ng k\IeC {\'\ecircumflex }t}{17}
+\contentsline {section}{\numberline {3.2}\IeC {\'\UHORN }ng d\IeC {\d u}ng c\IeC {\h u}a gi\IeC {\h a}i thu\IeC {\d \acircumflex }t GRASP}{17}
+\contentsfinish 

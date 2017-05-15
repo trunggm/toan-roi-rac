@@ -1,0 +1,833 @@
+%\documentclass[16p5,a4paper]{report}
+\documentclass[a4paper,13pt]{report}
+\usepackage[paperwidth=21cm, paperheight=29cm, left=3.5cm,right=2cm,top=3.5cm,bottom=3.0cm]{geometry}
+\usepackage{xcolor}
+\definecolor{ocre}{RGB}{243,102,25} 
+\usepackage{filecontents}
+\usepackage[utopia]{mathdesign} 
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{microtype} 
+\usepackage{wallpaper} 
+\usepackage{multirow} 
+\DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{ifthen}
+\usepackage{calculator}
+\usepackage{calc}
+\usepackage{makeidx} 
+\makeindex 
+
+
+%----------------------------------------------------------------------------------------
+
+\input{cautruc}
+
+
+\begin{document}
+\parindent=0pt
+\newcommand*\varhrulefill[1][0.4pt]{\leavevmode\leaders\hrule height#1\hfill\kern0pt}
+
+
+
+\chapterimage{chapter_head_1.pdf} 
+\pagestyle{empty} 
+\tableofcontents
+\cleardoublepage
+\pagestyle{fancy}
+
+%----------------------------------------------------------------------------------------
+% 	CHAPTER 1
+%----------------------------------------------------------------------------------------
+\everymath{\displaystyle}
+\newcommand{\vt}[1]{\overrightarrow{#1}}
+\newcommand{\vecto}{vectơ\ }
+\newcommand{\Vecto}{Vectơ\ }
+\newcommand{\tch}[2]{\left[\vt{#1},\vt{#2}\right]}
+\newcommand{\Tch}[2]{\left[#1,#2\right]}
+\newcommand{\dinhthuc}[4]{\left|\begin{array}{cc}
+#1 & #2 \\ 
+#3 & #4
+\end{array} \right|}
+
+\newcommand{\dthai}[4]{\left|\begin{array}{cc}
+#1 & #2 \\ 
+#3 & #4
+\end{array} \right|}
+
+\newcommand{\dtba}[9]{\left|\begin{array}{ccc}
+#1 & #2 &#3 \\ 
+#4 & #5 &#6 \\ 
+#7 & #8 &#9  
+\end{array} \right|}
+
+
+\newcommand{\tinhdtba}[9]{\DETERMINANT(#1,#2,#3;#4,#5,#6;#7,#8,#9){\sol}
+\left|\begin{array}{ccc}
+#1 & #2 &#3 \\ 
+#4 & #5 &#6 \\ 
+#7 & #8 &#9  
+\end{array} \right|=\sol
+}
+
+\newcommand{\tdtba}[9]{\DETERMINANT(#1,#2,#3;#4,#5,#6;#7,#8,#9){\sol}
+\sol
+}
+
+\newcommand{\tdthai}[4]{\DETERMINANT(#1,#2;#3,#4){\sol}\sol
+}
+
+\newcommand{\khung}[2]{\begin{tabular}{|c|}
+\hline 
+\parbox{#1}{{\color{white}{a}}\\ #2} \\ 
+\hline 
+\end{tabular}\bigskip \\  }
+
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+  \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+%Giới thiệu
+\begin{abstract} % tóm tắt bài báo cáo của bạn
+\addcontentsline{toc}{section}{Tóm tắt}
+Các nhân tạo ong thuộc địa (ABC) là một thuật toán tối ưu mới mẻ dựa vào trí thông minh bầy đàn. Thuật toán ABC được lấy cảm hứng từ hành vi xã hội của loài ong tự nhiên. Bầy ong nhân tạo được giới thiệu bởi Dervis Karaboga năm 2005 (Karaboga, 2005; Karaboga - Basturk, 2007) [1]. Những con ong tự nhiên rất là giỏi trong việc tìm kiếm một số nguồn thực phẩm. Bất cứ khi nào bất kỳ con ong tìm thức ăn, nó báo hiệu những con ong khác bằng vũ điệu của nó. Điều này báo hiệu những con ong khác về số lượng và vị trí của nguồn thức ăn và cũng giúp trong việc chỉ đạo các con ong khác về phía nguồn cung cấp thực phẩm trong việc tìm kiếm thức ăn. Những con ong có thể thu hút một số lượng lớn các con ong khác và đi theo nó để tìm kiếm các khu vực thực phẩm.
+Artificial Bee Colony Algorithm (thuật toán bầy ong nhân tạo viết tắt là ABC) là thuật toán Metaheuristic để giải gần đúng các bài toán NP – khó, tối ưu. Theo đánh giá cá nhân thì ABC là thuật toán hiệu quả để giải các bài toán có nhiều điểm tối ưu cục bộ, nhưng bù lại nó lại không hiệu quả bằng local search để giải các bài toán có ít điểm tối ưu cục bộ.
+
+\end{abstract}
+
+\chapterimage{chapter_head_2a.pdf} % Chapter heading image
+
+\chapter{Giới thiệu về bầy ong mật}
+
+\section{Tổ chức xã hội ong mật}
+Ong sống trong xã hội trật tự được phân công công việc rõ ràng và tổ chức vô cùng nghiêm khắc. Là loài côn trùng có sức mạnh đoàn kết lớn. Trong một tổ ong luôn có 3 loại ong được phân công việc khác nhau: Ong Chúa, Ong Thợ, Ong Đực
+
+\begin{itemize}
+\item Ong Chúa (Queen): là ong cái duy nhất trong đàn ong làm nhiệm vụ sinh sản, là trung tâm lãnh đạo tối cao trong việc sắp xếp tất cả các công việc trong đàn của mình. Ong Chúa sống trong một khu riêng do Ong Thợ xây dựng. Ong Chúa là con ong lớn nhất trong tổ, dài và to hơn các ong đực, có cuộc sống kéo dài khoảng từ 3 đến 5 năm.
+\item Ong Đực (Drones): Trong đàn ong, Ong Đực chi chiếm 1-2\%\, to hơn Ong Thợ một chút, không có vòi tiêm nọc, cũng không có túi đụng phấn hoa và sống trong đàn ong mà không làm gì cả, nhiệm vụ duy nhất của nó là giao phối với Ong Chúa. Tuy nhiên những con ong Đực này chỉ giao phối với nhũng con ong chúa ở tổ khác chứ không phải tổ của mình. Ong đực chỉ có trong mùa hè và phải nhờ sự nuôi nấng của ong thợ vì lưỡi hút của chúng rất ngắn không thể tự nuôi thân. “Hôn nhân” diễn ra trên không trung, những con nào bay nhanh và khỏe mới được giao phối với Ong Chúa. Sau khi giao phối Ong Đực sẽ bị chết, đời sống của Ong Đực bình quân kéo dài 3 tháng Bầy ong chi cho Ong Đực sống trong tổ đến mùa thu, sau đó sẽ đuổi đi hoặc Ong Thợ sẽ giết chết Ong Đực để tiết kiệm thức ăn trong mùa đông cho đàn ong.
+\item Ong Thợ (Workers): Chiếm khoảng trên 98\%\ số lượng trong đàn, ngoại hình nhỏ nhất, là ong cái nhưng không thể sinh trứng, chỉ có trong trường hợp đặc biệt mới có thể sinh trứng. Ong Thợ chiếm số lượng cá thể đông nhất trong đàn. Nhiệm vụ của nó là ra ngoài tìm phấn hoa và hút mật, chăm sóc ấu trùng do Ong Chúa đẻ ra. Xây tổ và chăm sóc Ong Chúa. Đồng thời còn kiêm nhiệm chức giữ gìn trật tự và luật lệ trong bầy.
+ 
+%\includegraphics[scale=1]{vtcp.pdf} 
+
+\end{itemize}
+\section{Loài ong làm tổ}
+\begin{itemize}
+\item Tổ ong mật thường xây ở những nơi được bao che như bọng cây hoặc hốc đá. Tổ ong được hĩnh thành từ rất nhiều phòng nhỏ hình lục giác làm bằng sáp nằm sát nhau. Những con ong thợ cũng đi lấy một số các nhựa cây mang về để sửa những cho nứt ở tổ của chúng. Ong sẽ phân ra từng khu vực để nuôi dưỡng ong nhỏ cho thế hệ sau, khu vực khác thì để lưu trữ thức ăn.
+\item Xác định phương hướng làm tổ: hướng được xác định một góc bên phải chếch 40 độ theo hướng mặt trời bên ngoài tổ ong.
+ 
+\begin{center}
+    \begin{figure}[htp]
+    \begin{center}
+     \includegraphics[scale=.5]{images/toong}
+    \end{center}
+    \caption{Cách xác hướng hướng làm tổ của bầy ong}
+    \label{refhinh1}
+    \end{figure}
+\end{center}
+
+
+\end{itemize}
+\subsection{Cộng \vecto}
+
+Cho hai \vecto $\vt{a}$ và $\vt{b}$. Từ một điểm $O$ trong mặt phẳng ta vẽ $\vt{OA}=\vt{a}$ và $\vt{AB}=\vt{b}$. \Vecto $\vt{c}=\vt{OC}$ gọi là \vecto tổng của hai \vecto $\vt{a}$ và $\vt{b}$.
+\subsection{Các tính chất của phép cộng \vecto}
+
+\textbf{Tính chất 1.} Phép cộng \vecto có tính chất giao hoán, nghĩa là:
+$$\vt{a}+\vt{b}=\vt{b}+\vt{a}$$
+\textbf{Tính chất 2.} Phép cộng \vecto có tính chất kết hợp, nghĩa là:
+$$(\vt{a}+\vt{b})+\vt{c}=\vt{a}+(\vt{b}+\vt{c})$$
+\textbf{Tính chất 3.} $$\vt{a}+\vt{0}=\vt{a}$$
+\textbf{Tính chất 4.} $$\vt{a}+\left(-\vt{a}\right)=\vt{0}$$
+
+\subsection{Trừ \vecto}
+
+Cho hai \vecto $\vt{a}$ và $\vt{b}$. Ta định nghĩa:
+$$\vt{a}-\vt{b}=\vt{a}+\left(-\vt{b}\right)$$
+\newpage 
+%Nhận xét: 
+\begin{remark}\
+
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item \textbf{Hệ thức Chasles}. Theo định nghĩa ta có:
+$$\vt{AB}+\vt{BC}=\vt{AC}$$
+\item \textbf{C\^ong thức đổi gốc. }
+$$\vt{AB}=\vt{OB}-\vt{OA}$$
+\item \textbf{Mô-đun của tổng và hiệu.}
+\begin{equation}\label{tong}|\vt{a}+\vt{b}| \leqslant |\vt{a}|+|\vt{b}|\end{equation}
+\begin{equation}\label{hieu}|\vt{a}-\vt{b}| \geqslant |\vt{a}|-|\vt{b}|\end{equation}
+
+Trong công thức (\ref{tong}), xảy ra dấu bằng khi và chỉ khi $\vt{a}$ và $\vt{b}$ cùng hướng.
+
+Trong công thức (\ref{hieu}), xảy ra dấu bằng khi và chỉ khi $\vt{a}$ và $\vt{b}$ cùng hướng và $ |\vt{a}|\geqslant |\vt{b}|$.
+\end{enumerate}
+\end{remark}
+\subsection{Nhân một \vecto với một số}
+
+%\subsubsection*{1. Định nghĩa
+\begin{definition} Tích của $\vt{a}$ với số thực $k \ne 0$ là một \vecto ký hiệu $k\vt{a}$. có mô-đun bằng $|k|.|\vt{a}|$, cùng hướng với $\vt{a}$ nếu $k>0$ và ngược hướng với $\vt{a}$ nếu $k<0$. Tích của \vecto $\vt{a}$ với số 0 là $\vt{0}$.
+\end{definition}
+\subsubsection{Tính chất}
+
+\begin{tabbing}
+\hspace*{2cm}\=\hspace{3cm}\=\kill
+\>\textbf{Tính chất 1.} \>  $1.\vt{a}=\vt{a}$\\ 
+\>\textbf{Tính chất 2.} \>  $(-1).\vt{a}=-\vt{a}$ \\ 
+\>\textbf{Tính chất 3.} \>  $p.(q\vt{a})=(pq)\vt{a}$ \\ 
+\>\textbf{Tính chất 4.} \>  $p.(\vt{a}+\vt{b})=p\vt{a}+p\vt{b}$ \\ 
+\>\textbf{Tính chất 5.} \>  $(p+q).\vt{a}=p\vt{a}+q\vt{a}$ \\ 
+\end{tabbing} 
+
+\section{Chu kỳ đời sống ong mật}
+%\subsection{Định nghĩa} 
+\begin{definition}\
+
+Cho $k$ \vecto $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}$ và $k$ số thực $p_1, p_2, p_3, \dots , p_k$.\bigskip
+
+\begin{itemize}
+\item Ta gọi\vspace*{-.75cm} $$\displaystyle\sum_{i=1}^{k}p_i\vt{a_i}=p_1\vt{a_1}+p_2\vt{a_2}+p_3\vt{a_3}+\dots + p_k\vt{a_k}$$ là một tổ hợp tuyến tính của các \vecto $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}$.
+\item Các \vecto $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}$ được gọi là \textit{phụ thuộc tuyến tính}  nếu tồn tại các số  $p_1, p_2, p_3, \dots , p_k$ không đồng thời bằng 0 sao cho \vspace*{-.25cm} $$\displaystyle\sum_{i=1}^{k}p_i\vt{a_i}=\vt{0}$$
+\item Các \vecto $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}$ được gọi là \textit{độc lập tuyến tính}  nếu từ\vspace*{-.25cm} $$\displaystyle\sum_{i=1}^{k}p_i\vt{a_i}=\vt{0}$$
+ta suy ra $p_1=p_2=p_3=\dots=p_k=0$.
+\end{itemize}
+\end{definition}
+\subsection{Điều kiện cần và đủ để một hệ vectơ là phụ thuộc tuyến tính}
+
+%\textbf{Định lý 1:}\quad  
+
+\begin{theorem}
+Một hệ vectơ  $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}\quad (k >1)$
+là phụ thuộc tuyến tính khi và chỉ khi có ít nhất một trong các vectơ ấy là tổ hợp tuyến tính của các vectơ còn lại.
+\end{theorem}
+
+%}\bigskip
+
+\textbf{Chứng minh.}\medskip
+
+\textit{Cần.} Giả sử hệ vectơ  $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}\quad (k >1)$ là phụ thuộc tuyến tính. Theo định nghĩa tồn tại một số $p_j\ne 0$ sao cho 
+$$\displaystyle p_j\vt{a_j} + \sum_{i\ne j}p_i\vt{a_i}=\vt{0}$$
+
+Khi đó: \vspace*{-.5cm}$$\vt{a_j} = -\sum_{i\ne j}\dfrac{p_i}{p_j}\vt{a_i}$$
+
+\textit{Đủ.} Giả sử trong hệ  vectơ  $\vt{a_1},\vt{a_2}, \vt{a_3}, \dots , \vt{a_k}\quad (k >1)$ có một vectơ là tổ hợp tuyến tính của các vectơ còn lại, giả sử vectơ đó là $\vt{a_k}$  sao cho $$\vt{a_k} = \sum_{i=1}^{k-1}p_i\vt{a_i}$$
+Khi đó: $$\sum_{i=1}^{k-1}p_i\vt{a_i} -1.\vt{a_k}=\vt{0}$$
+vì $-1\ne 0$ nên hệ vectơ trênđã nêu là phụ thuộc tuyến tính.
+\bigskip
+
+%\textbf{Định lý 2:}\quad \textit{
+\begin{theorem}
+Điều  kiện cần và đủ để hai vectơ phụ thuộc tuyến tính là chúng cùng phương.
+\end{theorem}
+%}\bigskip
+
+\textbf{Chứng minh.}  Giả sử $\vt{a}$ và $\vt{b}$ là phụ thuộc tuyến tính. Khi đó $\vt{a}=p.\vt{b}$ hay $\vt{b}=q.\vt{a}$. Như vậy hai vectơ $\vt{a}$ và $\vt{b}$ cùng phương.\bigskip
+
+Ngược lại, giả sử  hai vectơ $\vt{a}$ và $\vt{b}$ cùng phương. Ta chỉ xét trường hợp 
+$\vt{a}\ne \vt{0}$ và $\vt{b}\ne \vt{0}$.
+
+Hai vectơ $\vt{e_1}=\dfrac{\vt{a_1}}{|\vt{a_1}|}$ và $\vt{e_2}=\dfrac{\vt{a_2}}{|\vt{a_2}|}$ cùng phương và có mô-đun bằng nhau (vì đều bằng 1) nên bằng nhau hoặc đối nhau. Ta viết:
+$$\vt{e_1}=\vt{e_2}\quad \text{hay}\quad \vt{e_1}=-\vt{e_2}$$
+
+Vậy \quad $\vt{a_1}=k.\vt{a_2}$ với $k=\pm \dfrac{|\vt{a_1}|}{|\vt{a_2}|}$. Do đó hệ hai vectơ  $\vt{a}$ và $\vt{b}$ là phụ thuộc tuyến tính.
+
+\bigskip
+\newpage
+
+
+%\textbf{Định lý 3:}\quad \textit{
+\begin{theorem}
+Điều  kiện cần và đủ để ba vectơ phụ thuộc tuyến tính là chúng đồng phẳng.
+\end{theorem}
+%}\bigskip
+
+\textbf{Chứng minh.}  Giả sử hệ ba vectơ $\Big\{\vt{a} , \vt{b}, \vt{c} \Big\}$ là phụ thuộc tuyến tính. Khi đó có một vectơ là tổ hợp tuyến tính của hai vectơ còn lại, giả sử $\vt{c}=p.\vt{a}+q.\vt{b}$.  Từ điểm $O$ vẽ $\vt{OA}=\vt{a}, \vt{OB}=\vt{b}, \vt{OC}=\vt{c}$, ta có: 
+\begin{equation}\label{dtvt1}\vt{OC}=p.\vt{OA}+q.\vt{OB}\end{equation}
+\begin{itemize}
+\item  Nếu $\vt{a}$ và $\vt{b}$ không cùng phương thì ba điểm $O, A, B$ không thẳng hàng. Qua ba điểm này ta vẽ được một mặt phẳng $(P)$. Từ đẳng thức (\ref{dtvt1})  ta suy ra  điểm $C\in (P)$. Vậy ba vectơ $\vt{a} , \vt{b}, \vt{c}$ đồng phẳng.
+\item  Nếu $\vt{a}$ và $\vt{b}$ cùng phương thì ba điểm $O, A, B$ nằm trên một đường thẳng. Từ đẳng thức (\ref{dtvt1}) ta suy ra điểm $C$ cũng nằm trên đường thẳng ấy. Do đó ba vectơ $\vt{a} , \vt{b}, \vt{c}$ đồng phẳng.
+\end{itemize}
+Tóm lại ta đã chứng minh ba vectơ $\vt{a}$, $\vt{b}$ và $\vt{c}$ đồng phẳng.\bigskip
+
+Ngược lại, giả sử  ba vectơ $\vt{a}$,  $\vt{b}$ và $\vt{c}$ đồng phẳng. Ta xét hai trường hợp.
+\begin{description}
+ \item[Trường hợp 1.] $\vt{a}$ và $\vt{b}$ không cùng phương. Gọi $d_A, d_B$ lần lượt là đường thẳng $OA$ và $OB$. Từ $C$ ta vẽ $CA'$ song song với $d_B$ cắt $d_A$ tại $A'$. Cũng từ $C$ ta vẽ $CB'$ song song với $d_A$ cắt $d_B$ tại $B'$. Theo qui tắc hình bình hành ta có:
+$$\vt{OC}=\vt{OA'}+\vt{OB'}=p.\vt{OA}+q.\vt{OB}$$
+Như vậy \quad $\vt{c}=p.\vt{a}+q\vt{b}$. Do đó ba vectơ  $\vt{a}$, $\vt{b}$ và $\vt{c}$ là phụ thuộc tuyến tính.
+ 
+ 
+\definecolor{xdxdff}{rgb}{0,0,0}
+\definecolor{uququq}{rgb}{0,0,0}
+\begin{tikzpicture}[scale=0.7]
+\draw [-latex, thick] (0,0) -- (3,0);
+\draw [-latex, thick] (0,0) -- (2,3);
+\draw [dash pattern=on 1pt off 1pt] (0,0)-- (4,6);
+\fill [color=black] (2.67,4) circle (2.0pt);
+\fill [color=black] (3.33,0) circle (2.0pt);
+\draw [dash pattern=on 1pt off 1pt] (0,0)-- (7,0);
+\draw [dash pattern=on 1pt off 1pt] (6,4)-- (3.33,0);
+\draw [dash pattern=on 1pt off 1pt] (6,4)-- (2.67,4);
+\draw [-latex, thick] (0,0) -- (6,4);
+\draw (3,0) node[anchor=north west] {$A'$};
+\draw (1.9,4.4) node[anchor=north west] {$B'$};
+\fill [color=uququq] (0,0) circle (0.5pt);
+\draw[color=uququq] (-0.16,-0.12) node {$O$};
+\fill [color=xdxdff] (3,0) circle (0.5pt);
+\draw[color=xdxdff] (2.8,-0.3) node {$A$};
+\fill [color=black] (2,3) circle (1.0pt);
+\draw[color=black] (1.6,3) node {$B$};
+\fill [color=black] (4,6) circle (1.0pt);
+\fill [color=xdxdff] (7,0) circle (0.5pt);
+\fill [color=black] (6,4) circle (1.0pt);
+\draw[color=black] (6.16,4.22) node {$C$};
+\fill [color=uququq] (3.33,0) circle (0.5pt);
+\fill [color=uququq] (2.67,4) circle (0.5pt);
+\end{tikzpicture}
+
+
+
+ \item[Trường hợp 2.] $\vt{a}$ và $\vt{b}$ cùng phương, ta có $\vt{a}=k.\vt{b}$. Ta viết:$$1.\vt{a}-k.\vt{b}+0.\vt{c}=\vt{0}$$
+ \end{description} 
+
+
+ Do đó hệ ba vectơ  $\vt{a}$, $\vt{b}$ và $\vt{c}$ là phụ thuộc tuyến tính.
+ \section{Cách truyền thông tin của bầy ong}
+% \subsection{Định nghĩa 1.} 
+ \begin{definition}Cho hai vectơ $\vt{a}$ và $\vt{b}$ và gọi $d$ là giá của vectơ $\vt{b}$. Trên $d$  ta chọn vectơ đơn vị $\vt{e}$ cùng hướng với $\vt{b}$.  Khi đó ta gọi $d$ là \textit{trục} chứa vectơ $\vt{b}$.%\medskip 
+ \end{definition}
+ Giả sử $\vt{b}=\vt{AB}$. Gọi $A'$ và $B'$ lần lượt là hình chiếu vuông góc của $A$ và $B$ trên $d$. Vectơ $\vt{A'B'}$ gọi là vectơ chiếu của vectơ $\vt{AB}$ trên trục $d$. Ta có:
+ $$\vt{A'B'}=p.\vt{e}$$
+$p>0$  nếu $\vt{A'B'}$ cùng hướng với $\vt{e}$ và $p<0$ nếu $\vt{A'B'}$ ngược hướng với $\vt{e}$. Ngoài ra $|p|=|\vt{A'B'}| =A'B'$.\bigskip
+
+Số đại số $p$ gọi là \textit{chiếu của vectơ $\vt{b}$ lên trục chứa vectơ $\vt{a}$} và ta ký hiệu là 
+\newcommand{\chab}{
+\text{ch}\raise-2ex\hbox{$\vphantom{\big|}\vt{a}$}\hspace*{-1.5mm}$\vt{b}$}\chab.
+\bigskip
+
+Ta chứng minh 
+\begin{center}
+\khung{.3\textwidth}{$\text{\chab} = |\vt{b}|.\cos\varphi$} 
+\end{center}
+với $\varphi$ là góc tạo bởi $\vt{b}$ và $\vt{a}$.
+\begin{itemize}
+\item nếu $\varphi $ là góc vuông, nghĩa là $\vt{b}\perp \vt{a}$ thì \chab $=0$ vì lúc đó $A'\equiv B'$.
+\item nếu $\varphi $ là góc tù (xem hình vẽ) thì 
+$$|\vt{b}|. \cos (\pi-\varphi) = AB''=A'B' \Longrightarrow |\vt{b}|. \cos \varphi =-A'B'$$
+Do $\varphi$ là góc tù nên: $\vt{A'B'}$ ngược hướng với $\vt{a}$, do đó ngược hướng với $\vt{e}$. Vậy $p=-A'B'$.\medskip
+
+Như vậy ta có:
+$$ |\vt{b}|. \cos \varphi =p=\text{\chab}$$
+\parbox{.6\textwidth}{ \includegraphics[scale=.8]{pr.pdf} }
+ \item  nếu $\varphi $ là góc nhọn ta chứng minh tương tự.
+\end{itemize}
+
+ 
+ 
+
+ 
+%\subsection{Định nghĩa 2.} \textit{
+\begin{definition}Tích vô hướng của hai vectơ  là \emph{một số} bằng tích mô-đun của hai vectơ với cosin của góc tạo bởi hai vectơ ấy.
+\end{definition}
+%} \bigskip 
+
+
+Cho hai vectơ $\vt{a}$ và vectơ  $\vt{b}$ và gọi $\varphi$ là góc tạo bởi hai vectơ.  Theo định nghĩa ta có:
+\begin{align*}
+\vt{a}.\vt{b}&=|\vt{a}| .|\vt{b}|. \cos \varphi\\
+&=|\vt{a}|.\text{\chab}
+\end{align*}
+
+%\subsection{Hệ quả}
+\begin{corollary}\ \bigskip
+
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item Ta ký hiệu  $\vt{a}.\vt{a}=\vt{a}^2$ và đọc là \textit{bình phương vô hướng của vectơ $\vt{a}$}. \medskip
+
+Ta có: $\vt{a}.\vt{a}=|\vt{a}|^2$.
+
+Vậy $$\vt{a}^2=|\vt{a}|^2$$
+\item Điều kiện cần và đủ để hai vectơ (khác $\vt{0}$) vuông góc với nhau là tích vô hướng của chúng bằng không.
+$$\vt{a} \perp \vt{b} \Longleftrightarrow \vt{a}.\vt{b}=0$$
+\end{enumerate}
+\end{corollary}
+
+\subsection{Tính chất}
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item Tích vô hướng có tính chất giao hoán:
+$$\vt{a}.\vt{b}=\vt{b}.\vt{a}$$
+\item Tích vô hướng có tính chất phân phối với phép toán cộng:
+$$\vt{a}.(\vt{b}+\vt{c})=\vt{a}.\vt{b}+\vt{a}.\vt{c}$$
+\item $p.\left(\vt{a}.\vt{b}\right) =\left(p.\vt{a}\right).\vt{b}=\vt{a}.\left(p.\vt{b}\right)$
+\end{enumerate}
+\subsection{Áp dụng}
+
+Dựa vào các tính chất đã liệt kê ta chứng minh được các hằng đẳng thức sau đây:
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item $\left(\vt{a}+\vt{b}\right).\left(\vt{a}-\vt{b}\right)=\vt{a}^2-\vt{b}^2$
+\item $\left(\vt{a}+\vt{b}\right)^2=\vt{a}^2+2\vt{a}.\vt{b}+\vt{b}^2$
+\item $\left(\vt{a}-\vt{b}\right)^2=\vt{a}^2-2\vt{a}.\vt{b}+\vt{b}^2$
+\end{enumerate}
+%-------------------------------------------
+% Bắt đầu chương 2
+%-------------------------------------------
+\chapterimage{chapter_head_2a.pdf} % Chapter heading image
+
+\chapter{Hành vi bầy ong}
+
+\section{Chiến lược}
+
+%\subsection{Định nghĩa 1}
+\begin{definition}\
+
+\parbox{.4\textwidth}{Tam diện tạo bởi ba \vecto $\vt{OA}, \vt{OB}, \vt{OC}$ (không đồng phẳng và theo thứ tự ấy) được gọi là tam diện thuận nếu một người đứng dọc theo \vecto $\vt{OC}$ (hướng của \vecto là hướng từ chân đến đầu) \textit{thấy hướng quay từ $\vt{OA}$ đến vectơ $\vt{OB}$ là ngược hướng quay của kim đồng hồ. \bigskip \\
+ \color{white}{.} }
+}\hspace*{-.5cm}  \parbox{.6\textwidth}{
+\includegraphics[scale=1]{tch.pdf} }
+\end{definition}
+%\subsection{Định nghĩa 2%}
+\begin{definition}
+Tích có hướng của hai vectơ $\vt{a}$ và $\vt{b}$ là \vecto $\vt{c}$ thỏa các điều kiện sau đây:\bigskip
+
+\begin{itemize}
+\item $\vt{c} \perp \vt{a}\quad ;\quad \vt{c} \perp \vt{b}$
+\item tam diện tạo bởi ba vectơ $\vt{a}$, $\vt{b}$, $\vt{c}$ là tam diện thuận
+\item $|\vt{c}| = |\vt{a}|.|\vt{b}|.|\sin\varphi|$
+\end{itemize}
+\end{definition}
+Ta ký hiệu tích có hướng của hai vectơ $\vt{a}$ và $\vt{b}$ là $\left[\vt{a},\vt{b}\right]$.\bigskip
+
+%\textbf{Ví dụ:} 
+\begin{example}Trong không gian cho $\vt{i}, \vt{j}, \vt{k}$ là ba vectơ đơn vị và vuông góc với nhau từng đôi một như hình vẽ.
+
+
+\parbox{.4\textwidth}{\definecolor{xdxdff}{rgb}{0.49,0.49,1}
+\definecolor{cqcqcq}{rgb}{0.85,0.85,0.85}
+\begin{tikzpicture}[scale=1]
+\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=1.0cm,ystep=1.0cm] (-2.52,-2.28) grid (3.1,3.18);
+\clip(-2.52,-2.28) rectangle (3.1,3.18);
+\draw (0,0)-- (-2,-2);
+\draw (0,0)-- (0,3);
+\draw (0,0)-- (3,0);
+\draw [-latex, thick] (0,0) -- (-1.5,-1.5);
+\draw [-latex, thick] (0,0) -- (2,0);
+\draw [-latex, thick] (0,0) -- (0,2);
+\draw (-0.84,-0.58) node[anchor=north west] {$\vt{i}$};
+\draw (0.46,0.84) node[anchor=north west] {$\vt{j}$};
+\draw (-0.18,1.82) node[anchor=north west] {$\vt{k}$};
+\begin{scriptsize}
+\fill [color=xdxdff] (0,0) circle (0.5pt);
+\fill [color=xdxdff] (0,1) circle (0.5pt);
+\fill [color=xdxdff] (0,3) circle (0.5pt);
+\fill [color=xdxdff] (3,0) circle (0.5pt);
+\fill [color=xdxdff] (-1,-1) circle (0.5pt);
+\end{scriptsize}
+\end{tikzpicture}
+}\hfill \parbox{.5\textwidth}{
+Ta có: 
+
+\begin{center}
+$\tch{i}{j}=\vt{k}$\medskip 
+
+$\tch{j}{k}=\vt{i}$\medskip 
+
+$\tch{k}{i}=\vt{j}$
+\end{center}
+}
+\end{example}
+
+Từ định nghĩa ta có nhận xét sau đây: 
+\begin{itemize}
+\item Nếu $\vt{a}$ và $\vt{b}$ là hai \vecto cùng phương thì $\tch{a}{b}=\vt{0}$.
+\item Mô-đun của $\tch{a}{b}$ bằng diện tích của hình bình hành tạo bởi hai vectơ $\vt{a}$ và $\vt{b}$.
+\end{itemize}
+\subsection{Tính chất}
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item \textbf{Tính chất 1:} Tích có hướng của hai vectơ có tính chất phản giao hoán, nghĩa là:
+$$\tch{a}{b}=-\tch{b}{a}$$
+\item \textbf{Tính chất 2:} Tích có hướng của hai vectơ có tính chất phân phối đối với phép cộng vectơ, nghĩa là:
+\begin{align*}
+\left[\vt{a},\vt{b}+\vt{c}\right]&=\tch{a}{b}+\tch{a}{c}\\
+\left[\vt{a}+\vt{b},\vt{c}\right]&=\tch{a}{c}+\tch{b}{c}
+\end{align*}
+\item \textbf{Tính chất 3:}\quad   $p.\tch{a}{b}=\Tch{p.\vt{a}}{\vt{b}}=\Tch{a}{p.\vt{b}}$
+\end{enumerate}
+
+%\textbf{Nhận xét:} 
+
+\begin{remark}Tích có hướng của hai vectơ thỏa đồng nhất thức\linebreak  Jacobi:
+$$\Tch{\vt{a}}{\Tch{\vt{b}}{\vt{c}}}+\Tch{\vt{b}}{\Tch{\vt{c}}{\vt{a}}}+\Tch{\vt{c}}{\Tch{\vt{a}}{\vt{b}}}=\vt{0}$$
+Như vậy không gian $\mathbb{R}^3$ cùng với phép toán hai ngôi là tích có hướng của hai \vecto lập thành một \textit{đại số Lie}.
+\end{remark}
+\section{Tích hỗn tạp của ba vectơ}
+%\subsection{Định nghĩa}
+\begin{definition}Ta định nghĩa tích hỗn tạp của ba vectơ $\vt{a}, \vt{b}, \vt{c}$ theo đúng thứ tự đó là:
+$$(\vt{a}, \vt{b}, \vt{c} )=\tch{a}{b}.\vt{c}$$ 
+\end{definition}
+%\subsection{Định lý}
+\begin{theorem}
+Tích hỗn tạp của ba \vecto không đồng phẳng $\vt{a}, \vt{b}, \vt{c}$ là một số có giá trị tuyệt đối bằng thể tích của hình hộp dựng trên ba vecơ $\vt{a}, \vt{b}, \vt{c}$. Số ấy dương nếu ba vectơ $\vt{a}, \vt{b}, \vt{c}$ lập thành một tam diện thuận và âm nếu ba vectơ lập thành một tam diện nghịch.
+\end{theorem}
+
+
+\hspace*{-.5cm}\parbox{.5\textwidth}{\definecolor{cqcqcq}{rgb}{0.75,0.75,0.75}
+\begin{tikzpicture}[scale=.7]
+\draw [color=cqcqcq,dash pattern=on 2pt off 2pt, xstep=1.0cm,ystep=1.0cm] (-4.57,-2.33) grid (3.35,6.08);
+\clip(-4.57,-2.33) rectangle (3.35,6.08);
+\draw [-latex, thick,dash pattern=on 2pt off 2pt] (-1,0) -- (-3,-2);
+\draw [-latex, thick,dash pattern=on 2pt off 2pt] (-1,0) -- (-2,4);
+\draw [-latex, thick,dash pattern=on 2pt off 2pt] (-1,0) -- (3,0);
+\draw (-3,-2)-- (1,-2);
+\draw (1,-2)-- (3,0);
+\draw (-3,-2)-- (-4,2);
+\draw (-4,2)-- (-2,4);
+\draw (-2,4)-- (2,4);
+\draw (2,4)-- (3,0);
+\draw (1,-2)-- (0,2);
+\draw (0,2)-- (-4,2);
+\draw (-2.73,-0.53) node[anchor=north west] {$\vt{a}$};
+\draw (1.09,0.78) node[anchor=north west] {$\vt{b}$};
+\draw (-2.3,2.64) node[anchor=north west] {$\vt{c}$};
+\draw (0,2)-- (2,4);
+\draw [dash pattern=on 2pt off 2pt] (-1,0)-- (-1,3.36);
+\draw (-1,3.36)-- (-1,6);
+\draw (-2,4)-- (-1,3.36);
+\draw (-1,3.18)-- (-1.11,3.25);
+\draw (-1.11,3.25)-- (-1.11,3.43);
+\fill [color=black] (-3,-2) circle (1.0pt);
+\fill [color=black] (1,-2) circle (1.0pt);
+\fill [color=black] (-4,2) circle (1.0pt);
+\fill [color=black] (-1,0) circle (1.0pt);
+\fill [color=black] (-2,4) circle (1.0pt);
+\fill [color=black] (3,0) circle (1.0pt);
+\fill [color=black] (2,4) circle (1.0pt);
+\fill [color=black] (0,2) circle (1.0pt);
+\fill [color=black] (-1,6) circle (1.0pt);
+\end{tikzpicture}}\hfill \parbox{.4\textwidth}{Giả sử $\vt{a}, \vt{b}, \vt{c}$ là ba vectơ không đồng phẳng. Nếu ba vectơ trên lập thành một tam diện thuận thì $\tch{a}{b}$ và $\vt{c}$ hợp với nhau một góc nhọn. 
+}
+
+Khi đó $$\left(\vt{a}, \vt{b}, \vt{c}\right) = \left|\tch{a}{b}\right|.\text{ch}\raise-2ex\hbox{$\tch{a}{b}$}\hspace*{-1mm} \vt{c}$$
+
+$\left|\tch{a}{b}\right|$ là diện tích hình bình hành tạo bởi hai vectơ $\vt{a}, \vt{b}$.\medskip
+
+ch\raise-2ex\hbox{$\tch{a}{b}$}\hspace*{-1mm} $\vt{c}$ là chiều cao hình hộp dựng trên ba vectơ  $\vt{a}, \vt{b}, \vt{c}$.
+
+Vậy $\left(\vt{a}, \vt{b}, \vt{c}\right)$ bằng thể tích $V$ của hình hộp và là một số dương. \medskip
+
+Nếu ba vectơ trên lập thành một tam diện nghịch thì  $\left\{\vt{a}, \vt{b}, -\vt{c}\right\}$ lập thành một tam diện thuận nên theo chứng minh trên: $$\left(\vt{a}, \vt{b}, -\vt{c}\right) =V$$
+
+Do đó: $\left(\vt{a}, \vt{b}, \vt{c}\right)=- \tch{a}{b}.\left(-\vt{c}\right)=-V<0$.
+
+%\subsection{Định lý} \textit{
+\begin{theorem}Điều kiện cần và đủ để ba vectơ đồng phẳng là tích hỗn tạp của chúng bằng 0.\end{theorem}
+%}\bigskip
+
+\textbf{Chứng minh.}
+
+\textit{Cần.} Giả sử $\vt{a}, \vt{b}, \vt{c}$ là ba vectơ đồng phẳng. Từ điểm $O$ ta vẽ:
+$$\vt{OA}=\vt{a}\quad ;\quad \vt{OB}=\vt{b}\quad ;\quad \vt{OC}=\vt{c} $$
+\begin{itemize}
+\item Nếu $\vt{a}$ và $\vt{b}$ cùng phương thì $\tch{a}{b}=\vt{0}$, do đó:
+$$\left(\vt{a},\vt{b},\vt{c}\right) =0$$
+\item Nếu $\vt{a}$ và $\vt{b}$ không cùng phương thì $\tch{a}{b}=\vt{d}=\vt{OD}$. Do $OD \perp \text{mp}(OAB)$ nên $OD \perp OC$. Nghĩa là:
+
+$$\tch{a}{b} \perp \vt{c} \Rightarrow \left(\vt{a},\vt{b},\vt{c}\right) =0$$
+\end{itemize}
+\textit{Đủ.} Giả sử $\left(\vt{a},\vt{b},\vt{c}\right) =0$. Nếu ba vectơ $\vt{a}, \vt{b}, \vt{c}$ không  đồng phẳng thì theo định lý trên, $\left(\vt{a},\vt{b},\vt{c}\right)$ có giá trị tuyệt đối bằng bằng thể tích của hình hộp dựng trên ba vecơ $\vt{a}, \vt{b}, \vt{c}$. Do đó $\left(\vt{a},\vt{b},\vt{c}\right) \ne 0$. Mâu thuẩn.
+
+\section{Biểu thức tọa độ của các phép tính vectơ}
+
+Trong không gian $Oxyz$ với hệ trục tọa độ trực chuẩn $(O;\vt{i}, \vt{j}, \vt{k})$ trong đó $\vt{i}, \vt{j}, \vt{k}$ lần lượt là các vectơ  đơn vị trên các trục $Ox; Oy$ và $Oz$.
+
+Giả sử ta có ba vectơ $\vt{a}, \vt{b}, \vt{c}$ như sau:\medskip
+
+$\vt{a}=a_1\vt{i}+a_2\vt{j}+a_3\vt{k}$\medskip
+
+$\vt{b}=b_1\vt{i}+b_2\vt{j}+b_3\vt{k}$\medskip
+
+$\vt{c}=c_1\vt{i}+c_2\vt{j}+c_3\vt{k}$\medskip
+
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\item Tích vô hướng của hai vectơ:
+
+\begin{align}
+\vt{a}.\vt{b}&=\left(a_1\vt{i}+a_2\vt{j}+a_3\vt{k}\right).\left(b_1\vt{i}+b_2\vt{j}+b_3\vt{k}\right)\nonumber \\
+&=a_1.b_1+a_2.b_2+a_3.b_3
+\end{align}
+\item Tích có hướng của hai vectơ:
+
+\hspace*{-1.5cm}\parbox{.8\textwidth}{
+\begin{align}
+\tch{a}{b}&=\left[\left(a_1\vt{i}+a_2\vt{j}+a_3\vt{k}\right),\left(b_1\vt{i}+b_2\vt{j}+b_3\vt{k}\right)\right]\nonumber \\
+&=(a_2b_3-a_3b_2)\vt{i}+(a_3b_1-a_1b_3)\vt{j}+(a_1b_2-a_2b_1)\vt{k}\\
+&=\left|\begin{array}{ccc}
+\vt{i} & \vt{j} & \vt{k} \\ 
+a_1 & a_2 & a_3 \\ 
+b_1 & b_2 & b_3
+\end{array} \right|
+\end{align}
+}
+\item Tích hỗn tạp của ba vectơ:
+
+\parbox{.9\textwidth}{\begin{align}
+\left(\vt{a},\vt{b},\vt{c}\right)&=\tch{a}{b}.\vt{c}\nonumber \\
+&=\left|\begin{array}{ccc}
+a_1 & a_2 & a_3 \\ 
+b_1 & b_2 & b_3\\
+c_1 & c_2 & c_3
+\end{array} \right|
+\end{align}
+}
+\end{enumerate}
+
+
+\section{Phép biến đổi tọa độ}
+\subsection{Phép tịnh tiến}
+Trong mặt phẳng, xét hai hệ trục tọa độ trực chuẩn (I) $Oxy$ và (II) $Ix'y'$ trong đó hệ trục (II) là ảnh của hệ trục (I) qua phép tịnh tiến theo vectơ $\vt{OI}$ với điểm $I$ có tọa độ đối với hệ (I) là $(a;b)$.
+\bigskip
+
+ Giả sử một điểm $M$ có tọa độ đối với hệ trục (I) là $(x;y)$ và tọa độ đối với hệ trục (II) là $(x';y')$. Ta thiết lập mối quan hệ giữa $(x;y)$ và $(x';y')$.
+ 
+ Ta có: $$\vt{IM}=\vt{OM}-\vt{OI} \Longleftrightarrow \left\{\begin{array}{cc}
+ x'.\vt{i'} & = x.\vt{i} -a.\vt{i}\\ 
+ y'.\vt{j'} & = y.\vt{j} -b.\vt{j} 
+ \end{array} \right.$$
+ Ta có nhận xét do phép tịnh tiến ta có: $\vt{i'}=\vt{i}$ và $\vt{j'}=\vt{j}$. Do đó từ đẳng thức trên ta suy ra:
+ \begin{equation}\nonumber
+\left\{\begin{array}{cc}
+ x' & = x -a\\ 
+ y' & = y -b 
+ \end{array} \right.\end{equation}
+   \text{hay}\quad 
+\begin{equation}\label{bttdptt}
+ \left\{\begin{array}{cc}
+ x & = x' +a\\ 
+ y & = y' +b 
+ \end{array} \right.
+ \end{equation}
+ 
+ Các công thức (\ref{bttdptt}) gọi là \textit{biểu thức tọa độ của phép tịnh tiến}. 
+%\newpage
+
+ \definecolor{uququq}{rgb}{0.25,0.25,0.25}
+\definecolor{xdxdff}{rgb}{0.49,0.49,1}
+\definecolor{cqcqcq}{rgb}{0.5,0.5,0.5}
+\begin{tikzpicture}[scale=.9]
+%\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=1.0cm,ystep=1.0cm] (-1.92,-1.72) grid (7.36,5.3);
+\clip(-1.92,-1.72) rectangle (7.36,5.3);
+\draw (-3,0)-- (3,0);
+\draw (0,-2)-- (0,3);
+\draw [-latex, thick] (0,0) -- (1,0);
+\draw [-latex, thick] (0,0) -- (0,1);
+\draw (-0.48,-0.06) node[anchor=north west] {$O$};
+\draw (0.86,0.6) node[anchor=north west] {$\vt{i}$};
+\draw (0.04,1.16) node[anchor=north west] {$\vt{j}$};
+\draw (1,2)-- (7,2);
+\draw [line width=0.4pt] (4,0)-- (4,5);
+\draw [-latex, thick] (4,2) -- (5,2);
+\draw [-latex, thick] (4,2) -- (4,3);
+\draw (4.68,2.72) node[anchor=north west] {$\vt{i'}$};
+\draw (4,3.18) node[anchor=north west] {$\vt{j'}$};
+\draw (3,0)-- (8,0);
+\draw [dash pattern=on 1pt off 1pt] (6.02,1.52)-- (6.02,0);
+\draw [dash pattern=on 1pt off 1pt] (6.02,1.52)-- (0,1.52);
+\draw (6.02,1.52)-- (6.02,2);
+\draw (5.9,-0.14) node[anchor=north west] {$x$};
+\draw (-0.5,1.76) node[anchor=north west] {$y$};
+\draw (6.02,2.5) node[anchor=north west] {$x$'};
+\draw (3.94,1.55) node[anchor=north west] {$y'$};
+\draw [->] (0,0) -- (4,2);
+\draw (3.58,2.48) node[anchor=north west] {$I$};
+\fill [color=xdxdff] (0,-2) circle (0.5pt);
+\fill [color=uququq] (0,0) circle (0.5pt);
+\fill [color=xdxdff] (1,0) circle (0.5pt);
+\fill [color=xdxdff] (0,1) circle (0.5pt);
+\fill [color=uququq] (4,2) circle (0.5pt);
+\fill [color=xdxdff] (5,2) circle (0.5pt);
+\fill [color=xdxdff] (4,3) circle (0.5pt);
+\fill [color=xdxdff] (3,0) circle (0.5pt);
+\fill [color=black] (6.02,1.52) circle (1.5pt);
+\fill [color=uququq] (4,1.52) circle (0.5pt);
+\fill [color=uququq] (0,1.52) circle (0.5pt);
+\fill [color=uququq] (6.02,0) circle (0.5pt);
+\fill [color=uququq] (6.02,2) circle (1.0pt);
+\fill [color=black] (6.02,1.52) circle (2.5pt);
+\draw (6,1.6) node[anchor=north west] {$M$};
+\fill [color=black] (0,0) circle (2.5pt);
+\fill [color=black] (4,2) circle (2.5pt);
+\end{tikzpicture}
+
+ \subsection{Phép quay}
+ 
+\hspace*{-.75cm}\parbox{.5\textwidth}{\includegraphics[scale=1.1]{pq.pdf}  }\hfill \parbox{.4\textwidth}{Quay hệ trục tọa độ (I) $(Oxy)$ một góc $\varphi$ quanh gốc $O$ ta có hệ trục tọa độ (II) $(Ix'y')$.\\
+Gọi $\vt{i'}, \vt{j'}$ là các vectơ đơn vị trên hệ trục (II). Ta có:
+$$\vt{i'}=\cos\varphi \vt{i} +\sin \varphi \vt{j}$$
+}
+
+Suy ra:
+\begin{align*}
+\vt{j'}=&\cos\left(\varphi+\dfrac{\pi}{2}\right) \vt{i} +\sin\left(\varphi+\dfrac{\pi}{2}\right) \vt{j}\\
+&=-\sin\varphi \vt{i}+\cos\varphi \vt{j}
+\end{align*}
+
+Giả sử điểm $M$ có tọa độ $(x;y)$ trong hệ (I) và $(x';y')$ trong hệ (II). Vậy:
+
+\parbox{.8\textwidth}{\begin{align}
+\vt{OM}&=x\vt{i}+y\vt{j}\label{he1}\\
+\text{Ngoài ra}\quad \vt{OM}&=x'\vt{i'}+y'\vt{j'}\nonumber\\
+&=x'\left(\cos\varphi \vt{i} +\sin \varphi \vt{j}\right)+y'\left(-\sin\varphi \vt{i}+\cos\varphi \vt{j}\right)\nonumber\\
+&=\left(x'\cos\varphi-y'\sin\varphi\right)\vt{i}+\left(x'\sin\varphi+y'cos\varphi\right)\vt{j}\label{he2}
+\end{align}}
+
+So sánh (\ref{he1}) và (\ref{he2}) ta có:
+\begin{equation}\label{bttdpq}
+\left\{\begin{array}{cc}
+x & = x'\cos\varphi -y'\sin\varphi\\ 
+y & =x'\sin\varphi +y'\cos\varphi
+\end{array} \right.\ \text{hay}\ 
+\left\{\begin{array}{cc}
+x' & = x\cos\varphi +y\sin\varphi\\ 
+y' & =-x\sin\varphi +y\cos\varphi
+\end{array} \right.
+\end{equation}
+Các công thức (\ref{bttdpq}) gọi là \textit{biểu thức tọa độ của phép quay}.
+ \subsection{Phép dời}
+ 
+ Tích của phép quay và phép tịnh tiến có tính chất giao hoán và tích của hai phép biến hình này gọi là \textit{phép dời}.\medskip
+ 
+ Biểu thức tọa độ của phép dời là:
+ \begin{equation}\label{pd}
+ \left\{\begin{array}{cc}
+x & = a+ x'\cos\varphi -y'\sin\varphi\\ 
+y & =b+ x'\sin\varphi +y'\cos\varphi
+\end{array} \right.
+ \end{equation}
+ 
+%\textbf{ Ví dụ:} 
+\begin{example}
+Trong mặt phẳng xét một đường $\ell$ là tập hợp những điểm $M$ có tọa độ thỏa mãn phương trình: 
+$$ x^2 + 2xy  +  y^2 - 4x + 2y - 6=0\quad (\ell )$$
+
+thực hiện phép quay một góc $\varphi=\dfrac{\pi}{4}$ quanh điểm $I\left(-\dfrac{19}{24};\dfrac{31}{24}\right)$. Hãy viết phương trình của đường $\ell$ trong hệ trục tọa độ mới $Ix'y'$ và cho biết $\ell$ là đường gì?\bigskip
+
+
+\textbf{Giải:}\bigskip
+
+Xét phép dời thực hiện như đề bài yêu cầu. Biểu thức tọa độ của phép dời là:
+$$
+ \left\{\begin{array}{lcr}
+x & =&  -\dfrac{19}{24} + x'\cos\dfrac{\pi}{4} -y'\sin\cos\dfrac{\pi}{4}\\ 
+&\\
+y & =&\dfrac{31}{24}+ x'\sin\cos\dfrac{\pi}{4} +y'\cos\cos\dfrac{\pi}{4}
+\end{array} \right.
+$$
+hay:\vspace*{-.5cm}
+
+ \begin{equation}\label{pdpara}
+ \left\{\begin{array}{lcr}
+x & = & -\dfrac{19}{24} + \dfrac{\sqrt2}{2}\left(x' -y'\right)\\ 
+&\\
+y & =&\dfrac{31}{24}+ \dfrac{\sqrt2}{2}\left(x' +y'\right)
+\end{array} \right.
+ \end{equation}
+ 
+ Thay (\ref{pdpara}) vào phương trình của đường $\ell$ ta có:
+ $$\left(\dfrac12+\sqrt2x'\right)^2+\dfrac{23}{4}-\sqrt2 x'+3\sqrt2 y'-6=0$$
+ thu gọn:
+ $$\left(\dfrac12+\sqrt2x'\right)^2-\sqrt2(x'+3y')-\dfrac14=0$$
+ 
+Nếu ta đặt \quad $X=\dfrac12+\sqrt2x'\ ; \ Y=x'+3y'+7\sqrt2$\quad ta có:
+$$Y=\dfrac{X^2}{\sqrt2}$$
+
+Phương trình trên biểu diễn $\ell$ là một parabol.\end{example}
+\bigskip
+%\newpage
+
+\begin{center}
+\textbf{\Large BÀI TẬP}
+\end{center}
+\bigskip
+
+\begin{exercise}
+%\begin{enumerate}[label=\protect\circled{\arabic*}]
+%\item 
+Cho hai vectơ $\vt{a}\ ;\ \vt{b}$ sao cho $|\vt{a}|=3\ ;\ |\vt{b}|=2$ và $\widehat{(\vt{a},\vt{b})}=120^\circ$. Tính góc giữa hai vectơ $\vt{p}=2.\vt{a} -\vt{b}$  và $\vt{q}=\vt{a} +2\vt{b}$.
+\end{exercise}
+%\item 
+\begin{exercise}
+Cho tam giác $ABC$ có đường phân giác trong $AD$. Hãy biểu thị tuyến tính $\vt{AD}$ theo các vectơ $\vt{c}=\vt{AB}\ ; \ \vt{b}=\vt{AC}$. Cho biết các độ dài các cạnh $AB=c\ ;\ AC=b$. 
+\end{exercise}
+%\item 
+\begin{exercise}
+Cho tam giác $ABC$ có trung tuyến $CM$ vuông góc với đường phân giác trong $AL$. Cho biết $\dfrac{CM}{AL}=n$. Hãy tính góc $A$ theo $n$.
+\end{exercise}
+%\item 
+\begin{exercise}Cho tam giác $ABC$ với diện tích $S$. Gọi $E$ và $F$ lần lượt là trung điểm của $AB$ và $AC$. Điểm $M\ne C$ và điểm $N$ cùng nằm trên cạnh $BC$ sao cho $NM=NC$. Các đường thẳng $AN$ và $EM$ lần lượt cắt $BF$  tại $P$ và $Q$. Đặt $S'$ là diện tích tứ giác $MNPQ$. Chứng minh rằng :$$\dfrac16 S\leqslant S'\leqslant \dfrac15 S$$
+\end{exercise}
+%\item 
+\begin{exercise}Cho hai vectơ $\vt{a}, \vt{b}$. Chứng minh rằng:
+$$\tch{a}{b}^2+\left(\vt{a}.\vt{b}\right)^2=|\vt{a}|^2.|\vt{b}|^2$$
+\end{exercise}
+%\item 
+\begin{exercise} Chứng minh rằng nếu ba vectơ $\vt{a}, \vt{b}, \vt{c}$ thỏa mãn đẳng thức:
+$$\tch{a}{b}+\tch{b}{c}+\tch{c}{a} =\vt{0}$$
+thì ba vectơ đó đồng phẳng.
+\end{exercise}
+%\item 
+\begin{exercise} Cho $\vt{a}, \vt{b}, \vt{c}$ là ba vectơ không đồng phẳng. Chứng minh rằng
+nếu $\tch{a}{b}=\tch{b}{c}=\tch{c}{a}$ thì $\vt{a}+\vt{b}+\vt{c}=\vt{0}$ và ngược lại.
+\end{exercise}
+%\item 
+\begin{exercise} Chứng minh rằng nếu $\vt{a}, \vt{b}, \vt{c}$ là ba vectơ trong không gian thì:
+$$\left[\vt{a},\tch{b}{c}\right]=(\vt{a}.\vt{c}).\vt{b}-(\vt{a}.\vt{b}).\vt{c}$$
+Từ đó hãy chứng minh rằng:
+$$\Tch{\vt{a}}{\Tch{\vt{b}}{\vt{c}}}+\Tch{\vt{b}}{\Tch{\vt{c}}{\vt{a}}}+\Tch{\vt{c}}{\Tch{\vt{a}}{\vt{b}}}=\vt{0}$$
+\end{exercise}
+%\item 
+\begin{exercise} Cho tứ diện $ABCD$. Đặt $\vt{DA}=\vt{a}\ ;\ \vt{DB}=\vt{b}\ ;\ \vt{DC}=\vt{c}$. Gọi $H$ là chân đường vuông góc hạ từ $D$ đến mặt phẳng $(ABC)$. Chứng minh rằng:
+$\vt{DH}=\dfrac{(\vt{a},\vt{b}, \vt{c})}{\vt{d}^2}.\vt{d}$
+
+với \quad $\vt{d}=\tch{a}{b}+\tch{b}{c}+\tch{c}{a}$.
+\end{exercise}
+%\item 
+\begin{exercise} Cho hai hệ trục tọa độ trực chuẩn (I) $Oxy$ và (II) $Ix'y'$, với hệ (II) là ảnh của hệ (I) qua phép tịnh tiến. Biết một điểm $M$ có tọa độ đối với hệ (I) là $(4;-1)$ và với hệ (II) là $(1;-4)$. Tìm vectơ tọa độ của vectơ tịnh tiến.
+\end{exercise}
+%\item
+ \begin{exercise} Cho hai hệ trục tọa độ trực chuẩn (I) $Oxy$ và (II) $Ox'y'$, với hệ (II) là ảnh của hệ (I) qua phép quay góc $\varphi$. Biết một điểm $M$ có tọa độ đối với hệ (I) là $(2;3)$ và với hệ (II) là $\left(\dfrac{2-3\sqrt3}{2};\dfrac{2+3\sqrt3}{2}\right)$. Tìm góc quay $\varphi$.
+\end{exercise}
+%\item 
+\begin{exercise}
+Trong mặt phẳng với hệ trục tọa độ trực chuẩn (I) $Oxy$ cho một đường $\ell$ có phương trình:$x^2+3xy-y-4=0$ và điểm $I\left(\dfrac13;-\dfrac29\right)$. Tịnh tiến hệ trục tọa độ $Oxy$ theo vectơ $\vt{OI}$ ta được hệ trục tọa độ (II) $Ix'y'$. Hãy viết phương trình của đường $\ell$ trong hệ trục (II).
+\end{exercise}
+%\end{enumerate}
+%\vspace*{2cm}
+
+%-------------------------------------------
+% Bắt đầu chương 3
+%-------------------------------------------
+\chapterimage{chapter_head_2a.pdf} % Chapter heading image
+
+\chapter{Thuật toán bầy ong}
+
+\section{Ý tưởng}
+
+
+\section{Thuật toán}
+
+%-------------------------------------------
+% Bắt đầu chương 4
+%-------------------------------------------
+
+
+
+%-------------------------------------------
+% Bắt đầu chương Kết luận
+%-------------------------------------------
+%\chapterimage{chapter_head_2a.pdf} % Chapter heading image
+
+
+
+
+\begin{center}
+\includegraphics[scale=.25]{vt68.pdf} 
+\end{center}
+
+\end{document}
+
+

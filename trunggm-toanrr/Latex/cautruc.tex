@@ -1,0 +1,313 @@
+\usepackage{titlesec} % cho phép điều chỉnh tiêu đề
+\usepackage{graphicx}
+\usepackage{tikz} 
+\usepackage[utf8]{inputenc}
+\usepackage[russian,vietnam]{babel}
+\usepackage[T2A,T5]{fontenc}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+% Dùng để nhập tiêng Nga
+
+\usepackage[scaled=0.9]{PTSerif}
+\usepackage[scaled=0.9]{PTSans}
+\usepackage[scaled=0.87]{PTMono}
+ 
+\usepackage{tgtermes}
+\usepackage[scale=.90]{tgheros}
+\usepackage{tgcursor}
+ 
+
+\usepackage{substitutefont}
+\substitutefont{T2A}{\rmdefault}{PTSerif-TLF}
+\substitutefont{T2A}{\sfdefault}{PTSans-TLF}
+\substitutefont{T2A}{\ttdefault}{PTMono-TLF}
+
+% Hết dùng để nhập tiêng Nga
+
+\usepackage{enumitem} 
+\setlist{nolistsep} 
+
+\usepackage{booktabs} % Để có đường thẳng ngang đẹp trong bảng
+
+\usepackage{eso-pic} 
+
+%----------------------------------------------------------------------------------------
+% TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\usepackage{titletoc} 
+\contentsmargin{0cm}
+\titlecontents{chapter}[3.0cm] 
+{\addvspace{15pt}\large\sffamily\bfseries} 
+{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{3.0cm}\color{ocre}} % Chapter number
+{}  
+{\color{ocre!60}\normalsize\sffamily\bfseries\;\titlerule*[.5pc]{.}\;\thecontentspage} 
+\titlecontents{section}[3.0cm] 
+{\addvspace{5pt}\sffamily\bfseries}
+{\contentslabel[\thecontentslabel]{3.0cm}} 
+{}
+{\sffamily\hfill\color{black}\thecontentspage}
+[]
+
+\titlecontents{subsection}[3.0cm] 
+{\addvspace{1pt}\sffamily\small}
+{\contentslabel[\thecontentslabel]{3.0cm}} 
+{}
+{\sffamily\;\titlerule*[.5pc]{.}\;\thecontentspage}
+[] 
+
+%font
+%----------------------------------------------------------------------------------------
+% 	Bảng mục lục mini trên tiêu đề chương
+%----------------------------------------------------------------------------------------
+
+
+\titlecontents{lsection}[1em] 
+{\footnotesize\sffamily} {}{}{}
+
+\titlecontents{lsubsection}[.7em]
+{\normalfont\footnotesize\sffamily} {}{}{}
+ 
+%----------------------------------------------------------------------------------------
+% 	PAGE HEADERS
+%----------------------------------------------------------------------------------------
+
+\usepackage{fancyhdr} 
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\normalsize\bfseries #1}{}} 
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\normalsize\thesection\hspace{5pt}#1}{}} 
+\fancyhf{} \fancyhead[LE,RO]{\sffamily\normalsize\thepage}
+\fancyhead[LO]{\rightmark} 
+\fancyhead[RE]{\leftmark}
+\renewcommand{\headrulewidth}{0.5pt} 
+\addtolength{\headheight}{2.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{5pt}} 
+
+
+\makeatletter
+\renewcommand{\cleardoublepage}{
+\clearpage\ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\thispagestyle{empty}
+\newpage
+\fi}
+
+%----------------------------------------------------------------------------------------
+%	 THEOREM STYLES
+%----------------------------------------------------------------------------------------
+\let\circledS\undefined % here - PS
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\newcommand{\intoo}[2]{\mathopen{]}#1\,;#2\mathclose{[}}
+\newcommand{\ud}{\mathop{\mathrm{{}d}}\mathopen{}}
+\newcommand{\intff}[2]{\mathopen{[}#1\,;#2\mathclose{]}}
+\newtheorem{notation}{Notation}[chapter]
+
+
+\newtheoremstyle{ocrenumbox}{0pt}{0pt}{\normalfont}{}
+{\small\bf\sffamily\color{ocre}}
+{\;}
+{0.25em}
+{\small\sffamily\color{ocre}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} 
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\newtheoremstyle{blacknumex}
+{5pt}
+{5pt}
+{\normalfont}
+{} 
+{\small\bf\sffamily}
+{\;}
+{0.25em}
+{\small\sffamily{\tiny\ensuremath{\blacksquare}}\nobreakspace\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}
+
+\newtheoremstyle{blacknumbox} {0pt}{0pt}{\normalfont}{}{\small\bf\sffamily}{\;}{0.25em}
+{\small\sffamily\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}
+
+
+\newtheoremstyle{ocrenum}{5pt}{5pt}{\normalfont}{}{\small\bf\sffamily\color{ocre}}{\;}{0.25em}{\small\sffamily\color{ocre}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\makeatother
+
+
+\newcounter{dummy} 
+\numberwithin{dummy}{section}
+\theoremstyle{ocrenumbox}
+\newtheorem{theoremeT}[dummy]{Định lý }
+\newtheorem{problem}{Bài toán}[chapter]
+\newtheorem{exerciseT}{Bài tập}[chapter]
+\theoremstyle{blacknumex}
+\newtheorem{exampleT}{Ví dụ}[chapter]
+\theoremstyle{blacknumbox}
+\newtheorem{vocabulary}{Vocabulary}[chapter]
+\newtheorem{definitionT}{Định nghĩa }[section]
+\newtheorem{corollaryT}[dummy]{Hệ quả}
+\theoremstyle{ocrenum}
+\newtheorem{proposition}[dummy]{Proposition}
+
+%----------------------------------------------------------------------------------------
+%	 Định nghĩa các cái hộp viền màu và tô màu
+%----------------------------------------------------------------------------------------
+
+\RequirePackage[framemethod=default]{mdframed}
+
+% Hộp Định lý
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+backgroundcolor=black!5,
+linecolor=ocre,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+innerbottommargin=5pt]{tBox}
+
+%  Hộp bài tập
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+backgroundcolor=ocre!10,
+linecolor=ocre,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+innerbottommargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt]{eBox}	
+
+% Định nghĩa cái hộp
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=ocre,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=0pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=0pt]{dBox}	
+
+% Hộp hệ quả
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=gray,
+backgroundcolor=black!5,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=5pt]{cBox}				  
+		  
+
+% Tạo môi trường cho mỗi loại Định lý
+\newenvironment{theorem}{\begin{tBox}\begin{theoremeT}}{\end{theoremeT}\end{tBox}}
+\newenvironment{exercise}{\begin{eBox}\begin{exerciseT}}{\hfill{\color{ocre}\tiny\ensuremath{\blacksquare}}\end{exerciseT}\end{eBox}}				  
+\newenvironment{definition}{\begin{dBox}\begin{definitionT}}{\end{definitionT}\end{dBox}}	
+\newenvironment{example}{\begin{exampleT}}{\hfill{\tiny\ensuremath{\blacksquare}}\end{exampleT}}		
+\newenvironment{corollary}{\begin{cBox}\begin{corollaryT}}{\end{corollaryT}\end{cBox}}	
+
+%----------------------------------------------------------------------------------------
+% 	REMARK ENVIRONMENT
+%----------------------------------------------------------------------------------------
+
+\newenvironment{remark}{\par\vskip10pt\small \begin{list}{}{\leftmargin=35pt
+\rightmargin=25pt}\item\ignorespaces 
+\makebox[-2.5pt]{\begin{tikzpicture}[overlay]
+\node[draw=ocre!60,line width=1pt,circle,fill=ocre!25,font=\sffamily\bfseries,inner sep=2pt,outer sep=0pt] at (-15pt,0pt){\textcolor{ocre}{Nh\d{\^a}n x\'et}};\end{tikzpicture}} % Orange R in a circle
+\advance\baselineskip -1pt}{\end{list}\vskip5pt}
+
+%----------------------------------------------------------------------------------------
+%	 SECTION NUMBERING IN THE MARGIN
+%----------------------------------------------------------------------------------------
+
+\makeatletter
+\renewcommand{\@seccntformat}[1]{\llap{\textcolor{ocre}{\csname the#1\endcsname}\hspace{1em}}}      
+\renewcommand{\section}{\@startsection{section}{1}{\z@}
+{-3.5ex \@plus -1ex \@minus -.2ex}
+{2.3ex \@plus.2ex }
+{\normalfont\large\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
+{-3.25ex \@plus -1ex \@minus -.2ex}
+{1.5ex \@plus.2ex }
+{\normalfont\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection {subsubsection}{3}{\z@}
+{-3.25ex \@plus -1ex \@minus -.2ex}
+{1.5ex \@plus.2ex }
+{\normalfont\small\sffamily\bfseries}}                        
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
+{-3.25ex \@plus-.2ex \@minus .2ex}
+{-1em}
+{\normalfont\small\sffamily\bfseries}}
+
+
+
+                                     
+                                                    
+%----------------------------------------------------------------------------------------
+% Tiêu đề chương
+%----------------------------------------------------------------------------------------
+
+\newcommand{\thechapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand{\thechapterimage}{#1}}
+\def\thechapter{\arabic{chapter}}
+\def\@makechapterhead#1{
+\thispagestyle{empty}
+{\centering \normalfont\sffamily
+\ifnum \c@secnumdepth >\m@ne
+\if@mainmatter
+\startcontents
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+
+\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{\thechapterimage}};
+
+%Commenting the 3 lines below removes the small contents box in the chapter heading
+\draw[fill=white,opacity=.6] (1.55cm,0) rectangle (7cm,-7cm);
+\node[anchor=north west] at (2cm,.25cm) {\parbox[t][8cm][t]{6.5cm}{\huge\bfseries\flushleft \vspace*{2cm}\printcontents{l}{1}{\setcounter{tocdepth}{1}}}};
+
+\draw[anchor=west] (4cm,-5cm) node [rounded corners=25pt,fill=white,fill opacity=.6,text opacity=1,draw=ocre,draw opacity=1,line width=2pt,inner sep=15pt]{\huge\sffamily\bfseries\textcolor{black}{\thechapter\ --\ #1\vphantom{plPQq}\makebox[15cm]{}}};  %22cm -9cm
+\end{tikzpicture}};
+\end{tikzpicture}}\par\vspace*{230\p@}
+\fi
+\fi
+}
+\def\@makeschapterhead#1{
+\thispagestyle{empty}
+{\centering \normalfont\sffamily
+\ifnum \c@secnumdepth >\m@ne
+\if@mainmatter
+\startcontents
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north west] at (-4pt,4pt) {\includegraphics[width=\paperwidth]{\thechapterimage}};
+\draw[anchor=west] (5cm,-5cm) node [rounded corners=25pt,fill=white,opacity=.7,inner sep=15.5pt]{\huge\sffamily\bfseries\textcolor{black}{\vphantom{plPQq}\makebox[15cm]{}}};
+\draw[anchor=west] (5cm,-5cm) node [rounded corners=25pt,draw=ocre,line width=2pt,inner sep=15pt]{\huge\sffamily\bfseries\textcolor{black}{#1\vphantom{plPQq}\makebox[15cm]{}}};
+\end{tikzpicture}};
+\end{tikzpicture}}\par\vspace*{250\p@}
+\fi
+\fi
+}
+\makeatother
